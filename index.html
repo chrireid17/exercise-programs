@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Training Programs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+  :root{
+    --pitch-0:#0c1a14;
+    --pitch-1:#122318;
+    --pitch-2:#1a2f22;
+    --line:#2a4032;
+    --turf:#8ecf4a;
+    --turf-dim:#5c8a38;
+    --chalk:#f2efe6;
+    --chalk-dim:#9db3a3;
+    --amber:#ffb84d;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--pitch-0);color:var(--chalk);}
+  body{font-family:Inter,-apple-system,sans-serif; min-height:100vh;}
+
+  header{
+    padding:28px 18px 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--turf); margin-bottom:2px;
+  }
+  h1{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:36px; letter-spacing:0.02em;
+    margin:0; line-height:1;
+  }
+  .sub{ font-size:12.5px; color:var(--chalk-dim); margin-top:6px; }
+
+  main{ padding:16px; max-width:640px; margin:0 auto; }
+
+  a.program-card{
+    display:flex; align-items:center; gap:14px;
+    background:var(--pitch-1);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:12px;
+    text-decoration:none;
+    color:inherit;
+  }
+  a.program-card:active{ background:var(--pitch-2); }
+
+  .program-tag{
+    flex:none;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; font-weight:700;
+    color:var(--pitch-0); background:var(--turf);
+    border-radius:5px; padding:4px 8px;
+    letter-spacing:0.04em;
+  }
+  .program-info{ flex:1; min-width:0; }
+  .program-name{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:20px; letter-spacing:0.01em; color:var(--chalk);
+  }
+  .program-desc{
+    font-size:12.5px; color:var(--chalk-dim); margin-top:2px; line-height:1.4;
+  }
+  .arrow{ flex:none; color:var(--chalk-dim); font-size:18px; }
+
+  .empty-card{
+    border:1px dashed var(--line);
+    border-radius:14px;
+    padding:20px 16px;
+    text-align:center;
+    color:var(--chalk-dim);
+    font-size:12.5px;
+    line-height:1.6;
+  }
+  .empty-card code{
+    background:var(--pitch-2);
+    padding:2px 6px;
+    border-radius:4px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    color:var(--turf);
+  }
+
+  .section-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--chalk-dim); margin:20px 4px 10px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Home</div>
+  <h1>Training Programs</h1>
+  <div class="sub">Pick a program below.</div>
+</header>
+
+<main>
+  <div class="section-label">Active Programs</div>
+
+  <a class="program-card" href="knee-stability-routine.html">
+    <span class="program-tag">KNEE</span>
+    <div class="program-info">
+      <div class="program-name">Knee Stability Session</div>
+      <div class="program-desc">Post-ACL strength + reactive control, 2&ndash;3x/week</div>
+    </div>
+    <span class="arrow">&rsaquo;</span>
+  </a>
+
+  <!--
+    To add a new program:
+    1. Upload the new HTML file to this same repo (e.g. "mobility-routine.html")
+    2. Copy the <a class="program-card"> block above, paste it below this comment
+    3. Update href, program-tag text, program-name, and program-desc
+  -->
+
+  <div class="section-label">Add More</div>
+  <div class="empty-card">
+    Upload a new <code>.html</code> file to this repo, then add a card here linking to it.
+  </div>
+</main>
+
+</body>
+</html>
