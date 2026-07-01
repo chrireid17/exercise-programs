@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Knee Stability Session</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap');
+
+  :root{
+    --pitch-0:#0c1a14;
+    --pitch-1:#122318;
+    --pitch-2:#1a2f22;
+    --line:#2a4032;
+    --turf:#8ecf4a;
+    --turf-dim:#5c8a38;
+    --chalk:#f2efe6;
+    --chalk-dim:#9db3a3;
+    --amber:#ffb84d;
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--pitch-0);color:var(--chalk);}
+  body{
+    font-family:Inter,-apple-system,sans-serif;
+    padding-bottom:90px;
+  }
+
+  header{
+    background:var(--pitch-0);
+    border-bottom:1px solid var(--line);
+    padding:20px 18px 14px;
+  }
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--turf); margin-bottom:2px;
+  }
+  h1{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:34px; letter-spacing:0.02em;
+    margin:0; line-height:1;
+    color:var(--chalk);
+  }
+  .sub{
+    font-size:12.5px; color:var(--chalk-dim); margin-top:6px; line-height:1.4;
+  }
+  .streak-row{
+    display:flex; align-items:center; gap:10px; margin-top:12px; flex-wrap:wrap;
+  }
+  .streak-badge{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; background:var(--pitch-2); border:1px solid var(--line);
+    border-radius:20px; padding:5px 12px; color:var(--chalk-dim);
+  }
+  .streak-badge b{color:var(--turf);}
+
+  main{padding:16px;}
+
+  details.section{
+    background:var(--pitch-1);
+    border:1px solid var(--line);
+    border-radius:14px;
+    margin-bottom:14px;
+    overflow:hidden;
+  }
+  summary.section-head{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px;
+    cursor:pointer;
+    list-style:none;
+  }
+  summary.section-head::-webkit-details-marker{ display:none; }
+  .section-head-left{display:flex; align-items:center; gap:12px;}
+  .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; font-weight:700;
+    color:var(--pitch-0); background:var(--turf);
+    border-radius:5px; padding:3px 7px;
+    letter-spacing:0.04em; flex:none;
+  }
+  .tag.warn{background:var(--amber);}
+  .section-title{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:20px; letter-spacing:0.01em;
+    color:var(--chalk);
+  }
+  .section-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; color:var(--chalk-dim);
+  }
+  .chevron{
+    font-size:13px; color:var(--chalk-dim);
+    transition:transform 0.2s ease; flex:none; margin-left:10px;
+  }
+  details[open] .chevron{ transform:rotate(180deg); }
+
+  .note{
+    margin:0 16px 12px; padding:10px 12px;
+    background:rgba(255,184,77,0.08);
+    border-left:2px solid var(--amber);
+    border-radius:4px;
+    font-size:12.5px; color:var(--chalk-dim); line-height:1.5;
+  }
+
+  .exercise{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:12px 16px;
+    border-top:1px solid var(--line);
+  }
+
+  label.checkbox{
+    flex:none; width:26px; height:26px; margin-top:2px;
+    border-radius:6px; border:1.5px solid var(--line);
+    background:var(--pitch-2);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    position:relative;
+  }
+  label.checkbox input{
+    position:absolute; opacity:0; width:100%; height:100%; margin:0; cursor:pointer;
+  }
+  label.checkbox svg{ opacity:0; width:15px; height:15px; pointer-events:none; }
+  label.checkbox input:checked ~ svg{ opacity:1; }
+  label.checkbox:has(input:checked){ background:var(--turf); border-color:var(--turf); }
+
+  .ex-info{flex:1; min-width:0;}
+  .ex-name{ font-size:14.5px; font-weight:600; color:var(--chalk); margin-bottom:3px; }
+  label.checkbox:has(input:checked) ~ .ex-info .ex-name{ color:var(--chalk-dim); text-decoration:line-through; text-decoration-color:var(--turf-dim); }
+  .ex-detail{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--turf); }
+  .ex-cue{ font-size:12px; color:var(--chalk-dim); margin-top:4px; line-height:1.4; }
+
+  footer{
+    position:fixed; bottom:0; left:0; right:0;
+    background:var(--pitch-0);
+    border-top:1px solid var(--line);
+    padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+    display:flex; gap:10px;
+  }
+  .btn{
+    flex:1; font-family:'JetBrains Mono',monospace;
+    font-size:13px; font-weight:700; letter-spacing:0.04em;
+    text-transform:uppercase;
+    padding:13px; border-radius:10px; border:none;
+    cursor:pointer;
+  }
+  .btn-primary{ background:var(--turf); color:var(--pitch-0); }
+  .btn-ghost{
+    background:transparent; color:var(--chalk-dim);
+    border:1px solid var(--line); flex:0 0 auto; padding:13px 16px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Post-ACL &middot; Return to Soccer</div>
+  <h1>Knee Stability Session</h1>
+  <div class="sub">Strength + reactive control, built around the buckling issue. 2&ndash;3x per week, non-consecutive days.</div>
+  <div class="streak-row">
+    <div class="streak-badge">Last session: <b id="lastSession">&mdash;</b></div>
+    <div class="streak-badge">Sessions logged: <b id="sessionCount">0</b></div>
+  </div>
+</header>
+
+<main>
+
+  <details class="section" open data-id="warmup">
+    <summary class="section-head">
+      <div class="section-head-left">
+        <span class="tag">W-UP</span>
+        <div><div class="section-title">Warm-Up</div><div class="section-meta">5&ndash;10 min</div></div>
+      </div>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Bike or row, easy pace</div><div class="ex-detail">3&ndash;5 min</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Bodyweight squats</div><div class="ex-detail">2 x 10</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Glute bridges</div><div class="ex-detail">2 x 10</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Lateral band walks</div><div class="ex-detail">2 x 10 each direction</div></div></div>
+  </details>
+
+  <details class="section" open data-id="a">
+    <summary class="section-head">
+      <div class="section-head-left">
+        <span class="tag">A</span>
+        <div><div class="section-title">Bilateral Foundation</div><div class="section-meta">3 exercises</div></div>
+      </div>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Back squat or leg press</div><div class="ex-detail">3 x 6&ndash;8</div><div class="ex-cue">Moderate-heavy load</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Romanian deadlift</div><div class="ex-detail">3 x 8&ndash;10</div><div class="ex-cue">Hamstrings &mdash; often neglected post-ACL</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Leg curl (machine)</div><div class="ex-detail">3 x 10&ndash;12</div></div></div>
+  </details>
+
+  <details class="section" open data-id="b">
+    <summary class="section-head">
+      <div class="section-head-left">
+        <span class="tag warn">B</span>
+        <div><div class="section-title">Single-Leg Focus</div><div class="section-meta">priority block</div></div>
+      </div>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="note">This is the priority category. Soccer is a single-leg sport &mdash; bilateral lifts don&rsquo;t expose side-to-side deficits.</div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Bulgarian split squat</div><div class="ex-detail">3 x 8&ndash;10 per leg</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Single-leg RDL (dumbbell)</div><div class="ex-detail">3 x 8&ndash;10 per leg</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Step-ups</div><div class="ex-detail">3 x 8 per leg</div><div class="ex-cue">Box height that genuinely challenges you</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Nordic hamstring curl</div><div class="ex-detail">2&ndash;3 x 5&ndash;8</div><div class="ex-cue">Strong injury-reduction evidence. Start very light/assisted &mdash; it&rsquo;s brutal.</div></div></div>
+  </details>
+
+  <details class="section" open data-id="c">
+    <summary class="section-head">
+      <div class="section-head-left">
+        <span class="tag">C</span>
+        <div><div class="section-title">Eccentric / Control</div><div class="section-meta">2 exercises</div></div>
+      </div>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Slow-tempo split squats</div><div class="ex-detail">3&ndash;4 x 6 per leg</div><div class="ex-cue">3&ndash;4 second lowering phase</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Single-leg box step-downs</div><div class="ex-detail">3 x 8 per leg</div><div class="ex-cue">Controlled lowering, knee tracks over toe &mdash; no caving in</div></div></div>
+  </details>
+
+  <details class="section" open data-id="d">
+    <summary class="section-head">
+      <div class="section-head-left">
+        <span class="tag warn">D</span>
+        <div><div class="section-title">Reactive / Proprioceptive</div><div class="section-meta">tied to buckling</div></div>
+      </div>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="note">Most gym routines skip this &mdash; and it&rsquo;s the piece most directly tied to buckling.</div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Single-leg balance, unstable surface</div><div class="ex-detail">3 x 30&ndash;45 sec per leg</div><div class="ex-cue">Progress to eyes closed</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Single-leg hop and stick</div><div class="ex-detail">3 x 5 per leg</div><div class="ex-cue">Hop forward, land, hold 3 sec</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Lateral hop and stick</div><div class="ex-detail">3 x 5 per leg</div><div class="ex-cue">Side to side</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Perturbation drills</div><div class="ex-detail">3 x 30 sec per leg</div><div class="ex-cue">Partner or band gently destabilizes you in single-leg stance</div></div></div>
+  </details>
+
+  <details class="section" open data-id="core">
+    <summary class="section-head">
+      <div class="section-head-left">
+        <span class="tag">CORE</span>
+        <div><div class="section-title">Core / Hip</div><div class="section-meta">end of session</div></div>
+      </div>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Side plank</div><div class="ex-detail">3 x 30&ndash;45 sec per side</div><div class="ex-cue">Hip stability directly affects knee tracking</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Dead bug</div><div class="ex-detail">2 x 10 per side</div></div></div>
+    <div class="exercise"><label class="checkbox"><input type="checkbox"><svg viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#0c1a14" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></label><div class="ex-info"><div class="ex-name">Copenhagen plank</div><div class="ex-detail">2 x 20&ndash;30 sec per side</div><div class="ex-cue">Adductor strength &mdash; often overlooked</div></div></div>
+  </details>
+
+</main>
+
+<footer>
+  <button class="btn btn-ghost" id="resetBtn" type="button">Reset</button>
+  <button class="btn btn-primary" id="finishBtn" type="button">Finish Session</button>
+</footer>
+
+<script>
+(function(){
+  try{
+    var LOG_KEY = 'kneeRoutineLog_v1';
+    var STORE_KEY = 'kneeRoutineChecks_v1';
+
+    function getLog(){
+      try{ var raw = localStorage.getItem(LOG_KEY); return raw ? JSON.parse(raw) : {count:0,last:null}; }
+      catch(e){ return {count:0,last:null}; }
+    }
+    function setLog(l){ try{ localStorage.setItem(LOG_KEY, JSON.stringify(l)); }catch(e){} }
+    function getChecks(){
+      try{ var raw = localStorage.getItem(STORE_KEY); return raw ? JSON.parse(raw) : {}; }
+      catch(e){ return {}; }
+    }
+    function setChecks(c){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(c)); }catch(e){} }
+
+    function checkboxKey(cb){
+      var section = cb.closest('details');
+      var exs = Array.prototype.slice.call(section.querySelectorAll('input[type=checkbox]'));
+      var idx = exs.indexOf(cb);
+      return section.getAttribute('data-id') + '-' + idx;
+    }
+
+    var allChecks = getChecks();
+    var boxes = document.querySelectorAll('input[type=checkbox]');
+    boxes.forEach(function(cb){
+      var key = checkboxKey(cb);
+      if(allChecks[key]) cb.checked = true;
+      cb.addEventListener('change', function(){
+        var c = getChecks();
+        c[key] = cb.checked;
+        setChecks(c);
+      });
+    });
+
+    function refreshLogDisplay(){
+      var log = getLog();
+      document.getElementById('sessionCount').textContent = log.count || 0;
+      document.getElementById('lastSession').textContent = log.last || '\u2014';
+    }
+    refreshLogDisplay();
+
+    document.getElementById('finishBtn').addEventListener('click', function(){
+      var log = getLog();
+      log.count = (log.count || 0) + 1;
+      log.last = new Date().toLocaleDateString(undefined, {month:'short', day:'numeric'});
+      setLog(log);
+      boxes.forEach(function(cb){ cb.checked = false; });
+      setChecks({});
+      refreshLogDisplay();
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', function(){
+      boxes.forEach(function(cb){ cb.checked = false; });
+      setChecks({});
+    });
+  }catch(e){
+    // If anything above fails, the page still works as a plain static checklist.
+  }
+})();
+</script>
+</body>
+</html>
